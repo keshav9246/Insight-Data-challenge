@@ -224,10 +224,10 @@ public class Conversion {
 		LocalDateTime s = LocalDateTime.now();
 
 		//CSV input file path
-		String filePath = "input/log20101231.csv";
+		String filePath = "input/log.csv";
 
 		//creating a printout object to print output to a txt file output.txt
-		/*PrintStream out;
+		PrintStream out;
 		try 
 		{
 			out = new PrintStream(new FileOutputStream("output/output.txt"),true);
@@ -237,7 +237,7 @@ public class Conversion {
 		{
 			System.out.println(e.getMessage());
 		}
-*/
+
 
 		processInputFile(filePath);
 		LocalDateTime e = LocalDateTime.now();
