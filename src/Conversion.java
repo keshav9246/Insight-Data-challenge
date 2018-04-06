@@ -92,7 +92,7 @@ public class Conversion {
 		item.ip = p[0];
 
 		// Using SimpleDateFormat to convert values of second and third column into date and time 
-		SimpleDateFormat readFormat = new SimpleDateFormat( "MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat readFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
 		SimpleDateFormat writeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		//combining p[1] and p[2] into one DateTime variable date
