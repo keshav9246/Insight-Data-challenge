@@ -92,25 +92,46 @@ public class Conversion {
 		item.ip = p[0];
 
 		// Using SimpleDateFormat to convert values of second and third column into date and time 
-		SimpleDateFormat readFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat readFormat1 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		SimpleDateFormat writeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		//combining p[1] and p[2] into one DateTime variable date
 		Date date = null;
 		String dt = null;
+		String b = null;
 		try 
-		{
-			date = readFormat.parse(p[1] + " " + p[2]);
-			//Converting the DateTime variable to desired output format
-			dt = writeFormat.format(date);
+		{	
+			b = p[1] + " " + p[2];
+			date = readFormat.parse(b);
+			System.out.println(date);
+			if (!b.equals(readFormat.format(date))) 
+			{
+				System.out.println("inside if");
+				date = null;
+			}
 		} 
 		catch (ParseException e) 
 		{
 			System.out.println(e.getMessage());
 		}
+		if (date == null) {
+			// Invalid date format
+			try {
+				date = readFormat1.parse(b);
+				//Converting the DateTime variable to desired output format
+				dt = writeFormat.format(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
+		} else {
+			// Valid date format
+			//Converting the DateTime variable to desired output format
+			dt = writeFormat.format(date);
+		}
 
-		
-		 
+
 
 		//storing other csv cell values into corresponding variable
 		item.accessTime = dt;
@@ -188,6 +209,7 @@ public class Conversion {
 						e.printStackTrace();
 					}
 
+
 					id.activeDuration = (d2.getTime() - d1.getTime())/1000 % 60;
 					id.activeDuration += 1;
 
@@ -217,6 +239,20 @@ public class Conversion {
 
 	};
 
+	public static boolean isValidFormat(String format, String value) {
+		Date date = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			date = sdf.parse(value);
+			if (!value.equals(sdf.format(date))) {
+				date = null;
+			}
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+		}
+		return date != null;
+	}
+
 
 	//main method
 	public static void main(String[] args) {
@@ -224,7 +260,7 @@ public class Conversion {
 		LocalDateTime s = LocalDateTime.now();
 
 		//CSV input file path
-		String filePath = "input/log.csv";
+		String filePath = "input/outlog3.csv";
 
 		//creating a printout object to print output to a txt file output.txt
 		PrintStream out;
@@ -238,11 +274,8 @@ public class Conversion {
 			System.out.println(e.getMessage());
 		}
 
-
+		//calling function to process the csv file
 		processInputFile(filePath);
-		LocalDateTime e = LocalDateTime.now();
-
-		
 
 	}
 
